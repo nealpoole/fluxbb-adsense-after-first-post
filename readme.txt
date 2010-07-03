@@ -2,9 +2,9 @@
 ##
 ##        Mod title:  Adsense after First Post
 ##
-##      Mod version:  1.1.1
-##  Works on FluxBB:  1.2.*
-##     Release date:  2006-07-29
+##      Mod version:  1.2.0
+##  Works on FluxBB:  1.4.*
+##     Release date:  2010-07-03
 ##           Author:  Smartys (smartys@punbb-hosting.com)
 ##
 ##      Description:  This mod allows you to place a Google ad after the first
@@ -61,28 +61,35 @@ include/common.php
 #---------[ 5. FIND ]---------------------------------------------------------
 #
 
-	// Load cached config
-	@include PUN_ROOT.'cache/cache_config.php';
-	if (!defined('PUN_CONFIG_LOADED'))
-	{
-		require PUN_ROOT.'include/cache.php';
-		generate_config_cache();
-		require PUN_ROOT.'cache/cache_config.php';
-	}
+// Load cached config
+if (file_exists(FORUM_CACHE_DIR.'cache_config.php'))
+	include FORUM_CACHE_DIR.'cache_config.php';
 
+if (!defined('PUN_CONFIG_LOADED'))
+{
+	if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
+		require PUN_ROOT.'include/cache.php';
+
+	generate_config_cache();
+	require FORUM_CACHE_DIR.'cache_config.php';
+}
 
 #
 #---------[ 6. AFTER, ADD ]---------------------------------------------------
 #
 
-	@include PUN_ROOT.'cache/cache_adsense_config.php';
-	if (!defined('PUN_ADSENSE_CONFIG_LOADED'))
-	{
-		require_once PUN_ROOT.'include/cache.php';
-		generate_adsense_config_cache();
-		require PUN_ROOT.'cache/cache_adsense_config.php';
-	}
+// Load cached adsense config
+if (file_exists(FORUM_CACHE_DIR.'cache_adsense_config.php'))
+	include FORUM_CACHE_DIR.'cache_adsense_config.php';
 
+if (!defined('PUN_ADSENSE_CONFIG_LOADED'))
+{
+	if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
+		require PUN_ROOT.'include/cache.php';
+
+	generate_adsense_config_cache();
+	require FORUM_CACHE_DIR.'cache_adsense_config.php';
+}
 
 #
 #---------[ 7. OPEN ]---------------------------------------------------------
@@ -95,15 +102,11 @@ include/cache.php
 #---------[ 8. FIND ]---------------------------------------------------------
 #
 
-				fwrite($fh, $output);
-
-		fclose($fh);
-	}
-}
+define('FORUM_CACHE_FUNCTIONS_LOADED', true);
 
 
 #
-#---------[ 9. AFTER, ADD ]---------------------------------------------------
+#---------[ 9. BEFORE, ADD ]---------------------------------------------------
 #
 
 //
@@ -119,7 +122,7 @@ function generate_adsense_config_cache()
 		$output[$cur_config_item[0]] = $cur_config_item[1];
 
 	// Output config as PHP code
-	$fh = @fopen(PUN_ROOT.'cache/cache_adsense_config.php', 'wb');
+	$fh = @fopen(FORUM_CACHE_DIR.'cache_adsense_config.php', 'wb');
 	if (!$fh)
 		error('Unable to write adsense configuration cache file to cache directory. Please make sure PHP has write access to the directory \'cache\'', __FILE__, __LINE__);
 
@@ -140,13 +143,13 @@ function generate_adsense_config_cache()
 #---------[ 11. FIND ]--------------------------------------------------------
 #
 
-				<div class="postfootright"><?php echo (count($post_actions)) ? '<ul>'.implode($lang_topic['Link separator'].'</li>', $post_actions).'</li></ul></div>'."\n" : '<div>&nbsp;</div></div>'."\n" ?>
+<?php if (count($post_actions)) echo "\t\t\t\t".'<div class="postfootright">'."\n\t\t\t\t\t".'<ul>'."\n\t\t\t\t\t\t".implode("\n\t\t\t\t\t\t", $post_actions)."\n\t\t\t\t\t".'</ul>'."\n\t\t\t\t".'</div>'."\n" ?>
+			</div>
 		</div>
 	</div>
 </div>
 
 <?php
-
 
 #
 #---------[ 12. AFTER, ADD ]---------------------------------------------------
@@ -154,19 +157,22 @@ function generate_adsense_config_cache()
 
 	if ($post_count == '1' && $adsense_config['google_adsense_enabled'] == '1' && strpos($adsense_config['google_exclude_forums'], ','.$cur_topic['forum_id'].',') === FALSE && strpos($adsense_config['google_exclude_groups'], ','.$pun_user['g_id'].',') === FALSE)
 	{
+		++$post_count;
 ?>
-<div class="blockpost<?php echo $vtbg ?>">
+<div class="blockpost<?php echo ($post_count % 2 == 0) ? ' roweven' : ' rowodd' ?>">
 	<h2><span><?php echo format_time($cur_post['posted']) ?></span></h2>
 	<div class="box">
 		<div class="inbox">
-			<div class="postleft">
-				<dl>
-					<dt><strong><?php echo $adsense_config['google_bot_name'] ?></strong></dt>
-					<dd class="usertitle"><?php echo $adsense_config['google_bot_tag'] ?></dd>
-				</dl>
-			</div>
-			<div class="postright">
-				<div class="postmsg">
+			<div class="postbody">
+				<div class="postleft">
+					<dl>
+						<dt><strong><?php echo $adsense_config['google_bot_name'] ?></strong></dt>
+						<dd class="usertitle"><strong><?php echo $adsense_config['google_bot_tag'] ?></strong></dd>
+					</dl>
+				</div>
+				<div class="postright">
+					<h3><?php echo $lang_topic['Re'].' '; ?><?php echo pun_htmlspecialchars($cur_topic['subject']) ?></h3>
+					<div class="postmsg">
 					<?php echo "<br /><div style=\"TEXT-ALIGN: center\">
 	<script type=\"text/javascript\">
 	<!--
@@ -186,13 +192,14 @@ function generate_adsense_config_cache()
 	</script>
 	<script type=\"text/javascript\" src=\"http://pagead2.googlesyndication.com/pagead/show_ads.js\"></script>
 </div><br />\n" ?>
+					</div>
 				</div>
 			</div>
-			<div class="clearer"></div>
 		</div>
 	</div>
 </div>
 <?php
+		--$post_count;
 	}
 
 #

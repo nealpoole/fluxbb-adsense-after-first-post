@@ -50,20 +50,18 @@ if (isset($_POST['save']))
 	$measurements = explode("x", $_POST['format']);
 	$form['ad_width'] = intval($measurements[0]);
 	$form['ad_height'] = intval($measurements[1]);
-		
-	while (list($key, $input) = @each($form))
+
+	foreach ($form as $key => $input)
 	{
-		$key = $db->escape($key);
-		
 		// Only update values that have changed
-		if ($adsense_config['google_'.$key] != $input)
+		if (array_key_exists('google_'.$key, $adsense_config) && $adsense_config['google_'.$key] != $input)
 		{
-			if ($input != '')
+			if ($input != '' || is_int($input))
 				$value = '\''.$db->escape($input).'\'';
 			else
 				$value = 'NULL';
 
-			$db->query('UPDATE '.$db->prefix.'adsense_config SET conf_value='.$value.' WHERE conf_name=\'google_'.$key.'\'') or error('Unable to update adsense config', __FILE__, __LINE__, $db->error());
+			$db->query('UPDATE '.$db->prefix.'adsense_config SET conf_value='.$value.' WHERE conf_name=\'google_'.$db->escape($key).'\'') or error('Unable to update adsense config', __FILE__, __LINE__, $db->error());
 		}
 	}
 
