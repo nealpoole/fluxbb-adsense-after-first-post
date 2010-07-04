@@ -113,14 +113,14 @@ if (isset($_POST['save']))
 								<th scope="row">Exclude Forums</th>
 								<td>
 									<input type="text" name="form[exclude_forums]" size="25" tabindex="1" value = "<?php echo $adsense_config['google_exclude_forums'] ?>" />
-									<span>Fill this out if you want to exclude certain forums. Enter forum ids, put ","s around then (for example: ,5,6,7,)</span>
+									<span>Fill this out if you want to exclude certain forums. Enter forum ids, put ","s around them (for example: ,5,6,7,)</span>
 								</td>
 							</tr>
 							<tr>
 								<th scope="row">Exclude Groups</th>
 								<td>
 									<input type="text" name="form[exclude_groups]" size="25" tabindex="1" value = "<?php echo $adsense_config['google_exclude_groups'] ?>" />
-									<span>Fill this out if you want to exclude certain groups. Enter group ids, put ","s around then (for example: ,5,6,7,)</span>
+									<span>Fill this out if you want to exclude certain groups. Enter group ids, put ","s around them (for example: ,5,6,7,)</span>
 								</td>
 							</tr>
 						</table>
@@ -175,7 +175,7 @@ if (isset($_POST['save']))
 										<option value="728x15"<?php if ($adsense_config['google_ad_format'] == '728x15_0ads_al') echo ' selected="selected"' ?>> 728 x 15 Horizontal Link Unit </option>
 									</optgroup>
 									</select>
-									<span>Select from among the different ad sizes. </span>
+									<span>Select from among the different ad sizes</span>
 								</td>
 							</tr>
 							<tr>

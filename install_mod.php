@@ -9,7 +9,7 @@ $author         = 'Smartys';
 $author_email   = 'smartys@punbb-hosting.com';
 
 // Versions of FluxBB this mod was created for. A warning will be displayed, if versions do not match
-$fluxbb_versions= array('1.4', '1.4-rc2');
+$fluxbb_versions= array('1.4.0', '1.4-rc3', '1.4-rc2', '1.4-rc1');
 
 // Set this to false if you haven't implemented the restore function (see below)
 $mod_restore	= true;
