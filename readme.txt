@@ -2,9 +2,9 @@
 ##
 ##        Mod title:  Adsense after First Post
 ##
-##      Mod version:  1.2.0
-##  Works on FluxBB:  1.4.*
-##     Release date:  2010-07-03
+##      Mod version:  1.2.1
+##  Works on FluxBB:  1.4.*, 1.5.*
+##     Release date:  2013-04-30
 ##           Author:  Smartys (smartys@punbb-hosting.com)
 ##
 ##      Description:  This mod allows you to place a Google ad after the first
