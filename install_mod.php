@@ -38,13 +38,31 @@ function install()
 
 	$db->create_table('adsense_config', $schema) or error('Unable to create adsense_config table', __FILE__, __LINE__, $db->error());
 
-	$db->query('INSERT INTO '.$db->prefix.'adsense_config values ("google_bot_name", "AdBot"), ("google_bot_tag", "Google AdSense Posting Bot"),
-				("google_adsense_enabled", 0), ("google_ad_client", NULL), ("google_ad_width", 728),
-				("google_ad_height", 90), ("google_ad_format", "720x90_as"), ("google_ad_channel", NULL),
-				("google_ad_type", "text"), ("google_color_border", "FFFFFF"), ("google_color_bg", "FFFFFF"),
-				("google_color_link", "005CB1"), ("google_color_url", "005CB1"), ("google_color_text", "333333"),
-				("google_alternate_color", "FFFFFF"), ("google_exclude_forums", NULL), ("google_exclude_groups", NULL)')
-				or error('Unable to create table adsense_config', __FILE__, __LINE__, $db->error());
+	$config_info = array(
+		'google_bot_name'			=> 'AdBot',
+		'google_bot_tag'			=> 'Google Adsense Posting Bot',
+		'google_adsense_enabled'	=>  0,
+		'google_ad_client'			=>  NULL,
+		'google_ad_width'			=>  728,
+		'google_ad_height'			=>  90,
+		'google_ad_format'			=>  "720x90_as",
+		'google_ad_channel'			=>  NULL,
+		'google_ad_type'			=>  "text",
+		'google_color_border'		=>  "FFFFFF",
+		'google_color_bg'			=>  "FFFFFF",
+		'google_color_link'			=>  "005CB1",
+		'google_color_url'			=>  "005CB1",
+		'google_color_text'			=>  "333333",
+		'google_alternate_color'	=>  "FFFFFF",
+		'google_exclude_forums'		=>  NULL,
+		'google_exclude_groups'		=>  NULL
+	);
+
+	foreach ($config_info as $conf_name => $conf_value)
+	{
+		$db->query('INSERT INTO '.$db_prefix.'adsense_config (conf_name, conf_value) VALUES(\''.$conf_name.'\', '.(is_null($conf_value) ? 'NULL' : '\''.$db->escape($conf_value).'\'').')')
+			or error('Unable to insert into table '.$db_prefix.'config. Please check your configuration and try again', __FILE__, __LINE__, $db->error());
+	}
 }
 
 // This following function will be called when the user presses the "Restore" button (only if $mod_restore is true (see above))
