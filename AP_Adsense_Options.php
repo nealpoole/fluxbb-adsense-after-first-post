@@ -57,9 +57,9 @@ if (isset($_POST['save']))
 		if (array_key_exists('google_'.$key, $adsense_config) && $adsense_config['google_'.$key] != $input)
 		{
 			if ($input != '' || is_int($input))
-				$value = '\''.$db->escape($input).'\'';
+				$value='\''.$db->escape($input).'\'';
 			else
-				$value = 'NULL';
+				$value='NULL';
 
 			$db->query('UPDATE '.$db->prefix.'adsense_config SET conf_value='.$value.' WHERE conf_name=\'google_'.$db->escape($key).'\'') or error('Unable to update adsense config', __FILE__, __LINE__, $db->error());
 		}
@@ -68,9 +68,7 @@ if (isset($_POST['save']))
 	// Regenerate the config cache
 	require_once PUN_ROOT.'include/cache.php';
 	generate_adsense_config_cache();
-	
-	$redirect_url = str_replace("&foo=bar", "", $_SERVER['REQUEST_URI']);
-	
+
 	redirect($redirect_url, 'Adsense options updated. Redirecting &hellip;');
 }
 	// Display the admin navigation menu
@@ -80,7 +78,7 @@ if (isset($_POST['save']))
 	<div id="exampleplugin" class="blockform">
 		<h2><span>Adsense Options</span></h2>
 		<div class="box">
-			<form id="example" method="post" action="<?php echo $_SERVER['REQUEST_URI'] ?>&amp;foo=bar">
+			<form id="example" method="post" action="<?php echo pun_htmlspecialchars($_SERVER['REQUEST_URI']) ?>">
 				<p class="submittop"><input type="submit" name="save" value="Save changes" /></p>
 				<div class="inform">
 					<fieldset>
@@ -98,28 +96,28 @@ if (isset($_POST['save']))
 							<tr>
 								<th scope="row">Bot Name</th>
 								<td>
-									<input type="text" name="form[bot_name]" size="25" tabindex="1" value = "<?php echo $adsense_config['google_bot_name'] ?>" />
+									<input type="text" name="form[bot_name]" size="25" tabindex="1" value="<?php echo pun_htmlspecialchars($adsense_config['google_bot_name']) ?>" />
 									<span>This will be the name on the posts with the Adsense in it</span>
 								</td>
 							</tr>
 							<tr>
 								<th scope="row">Bot Tag</th>
 								<td>
-									<input type="text" name="form[bot_tag]" size="25" tabindex="1" value = "<?php echo $adsense_config['google_bot_tag'] ?>" />
+									<input type="text" name="form[bot_tag]" size="25" tabindex="1" value="<?php echo pun_htmlspecialchars($adsense_config['google_bot_tag']) ?>" />
 									<span>Fill this out if you want the bot posts to have a tag</span>
 								</td>
 							</tr>
 							<tr>
 								<th scope="row">Exclude Forums</th>
 								<td>
-									<input type="text" name="form[exclude_forums]" size="25" tabindex="1" value = "<?php echo $adsense_config['google_exclude_forums'] ?>" />
+									<input type="text" name="form[exclude_forums]" size="25" tabindex="1" value="<?php echo pun_htmlspecialchars($adsense_config['google_exclude_forums']) ?>" />
 									<span>Fill this out if you want to exclude certain forums. Enter forum ids, put ","s around them (for example: ,5,6,7,)</span>
 								</td>
 							</tr>
 							<tr>
 								<th scope="row">Exclude Groups</th>
 								<td>
-									<input type="text" name="form[exclude_groups]" size="25" tabindex="1" value = "<?php echo $adsense_config['google_exclude_groups'] ?>" />
+									<input type="text" name="form[exclude_groups]" size="25" tabindex="1" value="<?php echo pun_htmlspecialchars($adsense_config['google_exclude_groups']) ?>" />
 									<span>Fill this out if you want to exclude certain groups. Enter group ids, put ","s around them (for example: ,5,6,7,)</span>
 								</td>
 							</tr>
@@ -136,7 +134,7 @@ if (isset($_POST['save']))
 							<tr>
 								<th scope="row">Adsense Client ID</th>
 								<td>
-									<input type="text" name="form[ad_client]" size="25" tabindex="1" value = "<?php echo $adsense_config['google_ad_client'] ?>" />
+									<input type="text" name="form[ad_client]" size="25" tabindex="1" value="<?php echo pun_htmlspecialchars($adsense_config['google_ad_client']) ?>" />
 									<span>The unique identifier given to you by Google Adsense</span>
 								</td>
 							</tr>
@@ -181,7 +179,7 @@ if (isset($_POST['save']))
 							<tr>
 								<th scope="row">Ad Channel</th>
 								<td>
-									<input type="text" name="form[ad_channel]" size="25" tabindex="1" value = "<?php echo $adsense_config['google_ad_channel'] ?>" />
+									<input type="text" name="form[ad_channel]" size="25" tabindex="1" value="<?php echo pun_htmlspecialchars($adsense_config['google_ad_channel']) ?>" />
 									<span>If you need this, feel free to use it: for the most part I don't think people do</span>
 								</td>
 							</tr>
@@ -210,42 +208,42 @@ if (isset($_POST['save']))
 							<tr>
 								<th scope="row">Border Color</th>
 								<td>
-									<input type="text" name="form[color_border]" size="25" tabindex="1" value = "<?php echo $adsense_config['google_color_border'] ?>" />
+									<input type="text" name="form[color_border]" size="25" tabindex="1" value="<?php echo pun_htmlspecialchars($adsense_config['google_color_border']) ?>" />
 									<span>The color for the border of the ad</span>
 								</td>
 							</tr>
 							<tr>
 								<th scope="row">Background Color</th>
 								<td>
-									<input type="text" name="form[color_bg]" size="25" tabindex="1" value = "<?php echo $adsense_config['google_color_bg'] ?>" />
+									<input type="text" name="form[color_bg]" size="25" tabindex="1" value="<?php echo pun_htmlspecialchars($adsense_config['google_color_bg']) ?>" />
 									<span>The background color of the ad</span>
 								</td>
 							</tr>
 							<tr>
 								<th scope="row">Link Color</th>
 								<td>
-									<input type="text" name="form[color_link]" size="25" tabindex="1" value = "<?php echo $adsense_config['google_color_link'] ?>" />
+									<input type="text" name="form[color_link]" size="25" tabindex="1" value="<?php echo pun_htmlspecialchars($adsense_config['google_color_link']) ?>" />
 									<span>The color of the links in the ad</span>
 								</td>
 							</tr>
 														<tr>
 								<th scope="row">URL Color</th>
 								<td>
-									<input type="text" name="form[color_url]" size="25" tabindex="1" value = "<?php echo $adsense_config['google_color_url'] ?>" />
+									<input type="text" name="form[color_url]" size="25" tabindex="1" value="<?php echo pun_htmlspecialchars($adsense_config['google_color_url']) ?>" />
 									<span>The color of the URLs in the ad</span>
 								</td>
 							</tr>
 														<tr>
 								<th scope="row">Text Color</th>
 								<td>
-									<input type="text" name="form[color_text]" size="25" tabindex="1" value = "<?php echo $adsense_config['google_color_text'] ?>" />
+									<input type="text" name="form[color_text]" size="25" tabindex="1" value="<?php echo pun_htmlspecialchars($adsense_config['google_color_text']) ?>" />
 									<span>The color of the text in the ad</span>
 								</td>
 							</tr>
 														<tr>
 								<th scope="row">Alternate Color</th>
 								<td>
-									<input type="text" name="form[alternate_color]" size="25" tabindex="1" value = "<?php echo $adsense_config['google_alternate_color'] ?>" />
+									<input type="text" name="form[alternate_color]" size="25" tabindex="1" value="<?php echo pun_htmlspecialchars($adsense_config['google_alternate_color']) ?>" />
 									<span></span>
 								</td>
 							</tr>
