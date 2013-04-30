@@ -3,13 +3,13 @@
 
 // Some info about your mod.
 $mod_title      = 'Adsense after First Post';
-$mod_version    = '1.2.0';
-$release_date   = '2010-07-03';
+$mod_version    = '1.2.2';
+$release_date   = '2013-04-30';
 $author         = 'Smartys';
 $author_email   = 'smartys@punbb-hosting.com';
 
 // Versions of FluxBB this mod was created for. A warning will be displayed, if versions do not match
-$fluxbb_versions= array('1.4.0', '1.4-rc3', '1.4-rc2', '1.4-rc1');
+$fluxbb_versions= array('1.5.3', '1.5.2', '1.5.1', '1.5.0', '1.5-beta', '1.4.9', '1.4.8', '1.4.7', '1.4.6', '1.4.5', '1.4.4', '1.4.3', '1.4.2', '1.4.10', '1.4.1', '1.4.0', '1.4-rc3', '1.4-rc2', '1.4-rc1', '1.4-beta2', '1.4-beta1');
 
 // Set this to false if you haven't implemented the restore function (see below)
 $mod_restore	= true;

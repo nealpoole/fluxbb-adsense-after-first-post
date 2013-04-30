@@ -2,7 +2,7 @@
 ##
 ##        Mod title:  Adsense after First Post
 ##
-##      Mod version:  1.2.1
+##      Mod version:  1.2.2
 ##  Works on FluxBB:  1.4.*, 1.5.*
 ##     Release date:  2013-04-30
 ##           Author:  Smartys (smartys@punbb-hosting.com)
@@ -12,7 +12,7 @@
 ##
 ##   Affected files:  viewtopic.php
 ##                    include/common.php
-##		              include/cache.php
+##                    include/cache.php
 ##
 ##       Affects DB:  Yes
 ##
