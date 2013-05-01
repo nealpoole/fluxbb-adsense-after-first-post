@@ -60,8 +60,8 @@ function install()
 
 	foreach ($config_info as $conf_name => $conf_value)
 	{
-		$db->query('INSERT INTO '.$db_prefix.'adsense_config (conf_name, conf_value) VALUES(\''.$conf_name.'\', '.(is_null($conf_value) ? 'NULL' : '\''.$db->escape($conf_value).'\'').')')
-			or error('Unable to insert into table '.$db_prefix.'config. Please check your configuration and try again', __FILE__, __LINE__, $db->error());
+		$db->query('INSERT INTO '.$db->prefix.'adsense_config (conf_name, conf_value) VALUES(\''.$conf_name.'\', '.(is_null($conf_value) ? 'NULL' : '\''.$db->escape($conf_value).'\'').')')
+			or error('Unable to insert into table '.$db->prefix.'config. Please check your configuration and try again', __FILE__, __LINE__, $db->error());
 	}
 }
 
