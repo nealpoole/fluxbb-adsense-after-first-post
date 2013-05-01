@@ -3,8 +3,8 @@
 
 // Some info about your mod.
 $mod_title      = 'Adsense after First Post';
-$mod_version    = '1.2.2';
-$release_date   = '2013-04-30';
+$mod_version    = '1.2.3';
+$release_date   = '2013-05-01';
 $author         = 'Smartys';
 $author_email   = 'smartys@punbb-hosting.com';
 
